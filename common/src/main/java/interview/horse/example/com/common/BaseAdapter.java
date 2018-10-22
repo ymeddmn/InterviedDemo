@@ -45,8 +45,9 @@ public class BaseAdapter extends RecyclerView.Adapter<BaseAdapter.BaseHolder> {
                     context.startActivity(intent);
                 } else {
                     Intent intent = new Intent();
+                    intent.setAction(BaseActivity.ACTION_ACTIVITY);
+                    intent.addCategory("android.intent.category.DEFAULT");
                     intent.putExtra(BaseActivity.PACKAGENAME, infoBean.splitPackageName);
-                    intent.setClassName(context.getPackageName(), context.getPackageName());
                     context.startActivity(intent);
                 }
             }

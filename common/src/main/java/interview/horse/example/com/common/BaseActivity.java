@@ -16,7 +16,7 @@ import java.util.Set;
 import java.util.TreeSet;
 
 public class BaseActivity extends AppCompatActivity {
-
+    public static String ACTION_ACTIVITY = "mulu_activity";
     private RecyclerView recycle;
     private List<InfoBean> datas;
     private BaseAdapter adapter;
@@ -73,14 +73,20 @@ public class BaseActivity extends AppCompatActivity {
             String newPackageName = info.name.replace(packageName + ".", "");
             String[] split = newPackageName.split(splitDot);
             infoBean.completeClassName = info.name;
-            infoBean.isClass = !newPackageName.contains(splitDot);
+            infoBean.isClass = !newPackageName.contains(".");
             infoBean.splitPackageName = split.length > 0 ? split[0] : newPackageName;
+            infoBean.startActivityName = info.name;
         } else {
             String newPackageName = info.name.replace(packageName + ".", "");
+            if(!newPackageName.contains(currentPackageName)){
+                return;
+            }
             String[] split = newPackageName.split(splitDot);
             infoBean.completeClassName = info.name;
-            infoBean.isClass = !newPackageName.contains(splitDot);
-            infoBean.splitPackageName = split.length > 0 ? split[1] : newPackageName;
+            String[] split1 = newPackageName.split(splitDot);
+            infoBean.isClass = newPackageName.contains(".") && split1.length < 3;
+            infoBean.splitPackageName = split.length > 1 ? split[1] : newPackageName;
+            infoBean.startActivityName = getClass().getName();
         }
         String[] split = infoBean.splitPackageName.split(splitDot);
         if (!infoBean.isClass && !set.contains(infoBean.splitPackageName)) {

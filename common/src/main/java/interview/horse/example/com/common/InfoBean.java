@@ -10,4 +10,5 @@ public class InfoBean {
     public String className;//类名
     public String splitPackageName;//分割后的包名
     public boolean isClass;//true 是类   false：是包
+    public String startActivityName;//要启动的activity名字
 }
